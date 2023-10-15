@@ -1,5 +1,6 @@
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
-import 'package:coffee_shop/repository/coffee_repo.dart';
+import 'package:coffee_shop/data/models/order/order_model.dart';
+import 'package:coffee_shop/repository/order_repo.dart';
+import 'package:coffee_shop/ui/admin/coffees_screen/coffees_screen.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,26 +24,44 @@ class _AdminScreenState extends State<AdminScreen> {
         actions: [
           IconButton(icon: const Icon(Icons.search), onPressed: () {}),
           IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {}),
-        ],
-      ),
-      body: StreamBuilder<List<CoffeeModel>>(
-        stream: context.read<CoffeeRepo>().getCoffees(),
-        builder: (context, AsyncSnapshot<List<CoffeeModel>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView(children: [
-              ...List.generate(snapshot.data!.length, (index) {
-                CoffeeModel coffee = snapshot.data![index];
-                return ListTile(
-                  leading: Image.network(coffee.image),
-                  title: Text(
-                    coffee.name,
-                    style: const TextStyle(color: Colors.white),
+              icon: const Icon(Icons.list),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CoffeesScreen(),
                   ),
                 );
-              })
-            ]);
+              }),
+        ],
+      ),
+      body: StreamBuilder<List<OrderModel>>(
+        stream: context.read<OrderRepo>().getOrders(),
+        builder: (context, AsyncSnapshot<List<OrderModel>> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data!.isEmpty
+                ? const Center(
+                    child: Text(
+                      'There are no orders yet',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                : ListView(
+                    children: [
+                      ...List.generate(
+                        snapshot.data!.length,
+                        (index) {
+                          OrderModel order = snapshot.data![index];
+                          return ListTile(
+                            title: Text(
+                              order.name,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
           } else if (snapshot.hasError) {
             const Center(
               child: Text(

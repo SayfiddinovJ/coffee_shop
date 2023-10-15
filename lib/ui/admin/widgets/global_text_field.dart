@@ -92,6 +92,9 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white), // Set the color here
+        ),
       ),
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,

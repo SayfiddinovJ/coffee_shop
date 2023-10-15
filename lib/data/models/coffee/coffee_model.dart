@@ -64,7 +64,7 @@ class CoffeeModel {
   @override
   String toString() {
     return '''
-    CoffeeModel{coffeeId: $coffeeId,
+    coffeeId: $coffeeId,
     name: $name,
     type: $type,
     price: $price,
