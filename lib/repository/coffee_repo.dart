@@ -6,11 +6,16 @@ import 'package:flutter/foundation.dart';
 class CoffeeRepo {
   Future<UniversalData> addCoffee({required CoffeeModel coffeeModel}) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('coffees')
-          .doc(coffeeModel.coffeeId)
-          .set(coffeeModel.toJson());
+      DocumentReference newCoffee = await FirebaseFirestore.instance
+          .collection("coffees")
+          .add(coffeeModel.toJson());
 
+      await FirebaseFirestore.instance
+          .collection("coffees")
+          .doc(newCoffee.id)
+          .update({
+        "coffeeId": newCoffee.id,
+      });
       return UniversalData(data: 'Coffee added!');
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);

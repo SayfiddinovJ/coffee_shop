@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
               child: SelectButtons(
                 text: 'Admin',
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AdminScreen(),
@@ -64,7 +64,8 @@ class HomeScreen extends StatelessWidget {
             ),
             24.ph,
             const Center(
-                child: Text('or', style: TextStyle(color: Colors.white))),
+              child: Text('or', style: TextStyle(color: Colors.white)),
+            ),
             24.ph,
             SizedBox(
               height: 56.h,
@@ -72,7 +73,7 @@ class HomeScreen extends StatelessWidget {
               child: SelectButtons(
                 text: 'User',
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const UserScreen(),

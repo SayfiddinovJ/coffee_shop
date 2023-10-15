@@ -5,6 +5,7 @@ class CoffeeModel {
   final String price;
   final String image;
   final String description;
+  final String createdAt;
 
   CoffeeModel({
     required this.coffeeId,
@@ -13,6 +14,7 @@ class CoffeeModel {
     required this.price,
     required this.image,
     required this.description,
+    required this.createdAt,
   });
 
   CoffeeModel copyWith({
@@ -22,6 +24,7 @@ class CoffeeModel {
     String? price,
     String? image,
     String? description,
+    String? createdAt,
   }) {
     return CoffeeModel(
       coffeeId: coffeeId ?? this.coffeeId,
@@ -30,6 +33,7 @@ class CoffeeModel {
       price: price ?? this.price,
       image: image ?? this.image,
       description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -41,6 +45,7 @@ class CoffeeModel {
       price: json['price'] ?? '',
       image: json['image'] ?? '',
       description: json['description'] ?? '',
+      createdAt: json['createdAt'] ?? '',
     );
   }
 
@@ -52,6 +57,7 @@ class CoffeeModel {
       'price': price,
       'image': image,
       'description': description,
+      'createdAt': createdAt,
     };
   }
 
@@ -64,6 +70,7 @@ class CoffeeModel {
     price: $price,
     image: $image,
     description: $description
+    createdAt: $createdAt
     ''';
   }
 }
