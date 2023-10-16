@@ -1,4 +1,4 @@
-List<String> categories = [
+final List<String> categories = [
   "Espresso",
   "Cappuccino",
   "Latte",

@@ -8,7 +8,7 @@ class GlobalTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final Widget? prefixIcon;
   final String caption;
-  final ValueChanged? onChanged;
+  final ValueChanged onChanged;
   final FocusNode? focusNode;
   final bool readOnly;
   final TextInputFormatter? textInputFormatter;
@@ -33,7 +33,7 @@ class GlobalTextField extends StatefulWidget {
     this.suffixIcon,
     this.readOnly = false,
     this.controller,
-    this.onChanged,
+    required this.onChanged,
     this.focusNode,
     this.textInputFormatter,
     this.obscureText,
@@ -69,9 +69,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (String value) {
-        widget.onChanged!(value);
-      },
+      style: TextStyle(color: color),
+      onChanged: widget.onChanged,
       controller: _internalController,
       maxLines: widget.maxLines,
       maxLength: widget.maxLength,
@@ -92,8 +91,14 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white), // Set the color here
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        disabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
         ),
       ),
       keyboardType: widget.keyboardType,

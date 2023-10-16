@@ -23,6 +23,7 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
             image: '',
             description: '',
             createdAt: '',
+            // count: 0,
           ),
           status: FormStatus.pure,
           coffees: const [],
@@ -39,6 +40,7 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
   Future<void> addCoffee(
       AddCoffeeEvent addCoffeeEvent, Emitter<CoffeeState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
+    debugPrint('Add coffee bloc');
     UniversalData data =
         await coffeeRepo.addCoffee(coffeeModel: state.coffeeModel);
     if (data.error.isEmpty) {
@@ -114,9 +116,19 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
             price: updateCurrentUserEvent.value as String);
         break;
 
+      // case CoffeeFieldKeys.count:
+      //   currentCoffee =
+      //       currentCoffee.copyWith(count: updateCurrentUserEvent.value as int);
+      //   break;
+
       case CoffeeFieldKeys.description:
         currentCoffee = currentCoffee.copyWith(
             description: updateCurrentUserEvent.value as String);
+        break;
+
+      case CoffeeFieldKeys.category:
+        currentCoffee = currentCoffee.copyWith(
+            type: updateCurrentUserEvent.value as String);
         break;
     }
 
