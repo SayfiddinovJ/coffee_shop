@@ -84,7 +84,7 @@ class FavoritesView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 24.sp,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.FFD17842,
+                              color: AppColors.buttonsColor,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -101,7 +101,7 @@ class FavoritesView extends StatelessWidget {
                           padding: EdgeInsets.all(8.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100.r),
-                            color: AppColors.FFD17842,
+                            color: AppColors.buttonsColor,
                           ),
                           child: const Icon(
                             Icons.add,

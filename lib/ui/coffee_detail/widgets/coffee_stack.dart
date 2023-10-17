@@ -33,7 +33,7 @@ class CoffeeStack extends StatelessWidget {
               width: 48.w,
               height: 48.w,
               decoration: BoxDecoration(
-                color: AppColors.FF0C0F14,
+                color: AppColors.backgroundColor,
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: const Icon(
@@ -77,7 +77,7 @@ class CoffeeStack extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.FFD17842,
+                    color: AppColors.buttonsColor,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -94,7 +94,7 @@ class CoffeeStack extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
               decoration: BoxDecoration(
-                  color: AppColors.FFD17842,
+                  color: AppColors.buttonsColor,
                   borderRadius: BorderRadius.circular(8.r),),
               child: Text('Add to cart',style: TextStyle(
                 color: AppColors.white,

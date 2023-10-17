@@ -3,7 +3,7 @@ class CoffeeModel {
   final String name;
   final String type;
   final String price;
-  // final int count;
+  final String count;
   final String image;
   final String description;
   final String createdAt;
@@ -13,7 +13,7 @@ class CoffeeModel {
     required this.name,
     required this.type,
     required this.price,
-    // required this.count,
+    required this.count,
     required this.image,
     required this.description,
     required this.createdAt,
@@ -24,7 +24,7 @@ class CoffeeModel {
     String? name,
     String? type,
     String? price,
-    // int? count,
+    String? count,
     String? image,
     String? description,
     String? createdAt,
@@ -34,7 +34,7 @@ class CoffeeModel {
       name: name ?? this.name,
       type: type ?? this.type,
       price: price ?? this.price,
-      // count: count ?? this.count,
+      count: count ?? this.count,
       image: image ?? this.image,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
@@ -47,7 +47,7 @@ class CoffeeModel {
       name: json['name'] ?? '',
       type: json['type'] ?? '',
       price: json['price'] ?? '',
-      // count: json['count'] ?? '',
+      count: json['count'] ?? '',
       image: json['image'] ?? '',
       description: json['description'] ?? '',
       createdAt: json['createdAt'] ?? '',
@@ -60,7 +60,7 @@ class CoffeeModel {
       'name': name,
       'type': type,
       'price': price,
-      // 'count': count,
+      'count': count,
       'image': image,
       'description': description,
       'createdAt': createdAt,
@@ -74,7 +74,7 @@ class CoffeeModel {
     name: $name,
     type: $type,
     price: $price,
-    count: 'count',
+    count: $count,
     image: $image,
     description: $description
     createdAt: $createdAt

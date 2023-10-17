@@ -21,15 +21,15 @@ class _CoffeesScreenState extends State<CoffeesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.FF0C0F14,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.FF0C0F14,
+        backgroundColor: AppColors.backgroundColor,
         title: const Text('All coffees'),
         elevation: 0,
         actions: [
           IconButton(
             onPressed: () async {
-              CoffeeModel? coffee = await showSearch(
+              await showSearch(
                   context: context, delegate: CoffeeSearchDelegate(coffees));
             },
             icon: const Icon(Icons.search),

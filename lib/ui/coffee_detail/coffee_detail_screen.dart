@@ -14,7 +14,7 @@ class CoffeeDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.FF0C0F14,
+      backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
           Expanded(

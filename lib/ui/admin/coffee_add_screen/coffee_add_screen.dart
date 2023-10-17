@@ -27,10 +27,10 @@ class _CoffeeAddScreenState extends State<CoffeeAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.FF0C0F14,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: const Text('Add Coffee'),
-        backgroundColor: AppColors.FF0C0F14,
+        backgroundColor: AppColors.backgroundColor,
         elevation: 0,
       ),
       body: BlocConsumer<CoffeeBloc, CoffeeState>(

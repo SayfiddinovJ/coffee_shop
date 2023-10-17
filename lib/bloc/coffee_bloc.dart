@@ -23,7 +23,7 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
             image: '',
             description: '',
             createdAt: '',
-            // count: 0,
+            count: '0',
           ),
           status: FormStatus.pure,
           coffees: const [],
@@ -116,10 +116,10 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
             price: updateCurrentUserEvent.value as String);
         break;
 
-      // case CoffeeFieldKeys.count:
-      //   currentCoffee =
-      //       currentCoffee.copyWith(count: updateCurrentUserEvent.value as int);
-      //   break;
+      case CoffeeFieldKeys.count:
+        currentCoffee = currentCoffee.copyWith(
+            count: updateCurrentUserEvent.value as String);
+        break;
 
       case CoffeeFieldKeys.description:
         currentCoffee = currentCoffee.copyWith(

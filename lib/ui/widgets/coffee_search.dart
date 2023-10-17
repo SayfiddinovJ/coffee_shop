@@ -14,7 +14,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
       appBarTheme: theme.appBarTheme.copyWith(
-        backgroundColor: AppColors.FF0C0F14,
+        backgroundColor: AppColors.backgroundColor,
         iconTheme: const IconThemeData(color: Colors.white),
         actionsIconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -22,9 +22,9 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
         hintStyle: TextStyle(color: Colors.white54),
       ),
       textTheme: TextTheme(
-        headline6: TextStyle(color: Colors.white, fontSize: 18.sp),
+        titleLarge: TextStyle(color: Colors.white, fontSize: 18.sp),
       ),
-      scaffoldBackgroundColor: AppColors.FF0C0F14,
+      scaffoldBackgroundColor: AppColors.backgroundColor,
     );
   }
 
@@ -61,6 +61,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
             image: '',
             description: '',
             createdAt: '',
+            count: '0',
           ),
         );
       },
