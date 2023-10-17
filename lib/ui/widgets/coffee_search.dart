@@ -62,6 +62,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
             description: '',
             createdAt: '',
             count: '0',
+            status: '',
           ),
         );
       },

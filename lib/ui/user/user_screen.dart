@@ -1,7 +1,8 @@
 import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
 import 'package:coffee_shop/repository/coffee_repo.dart';
-import 'package:coffee_shop/ui/user/sub_screens/favorites_view.dart';
-import 'package:coffee_shop/ui/user/sub_screens/populars_view.dart';
+import 'package:coffee_shop/ui/user/cart_screens/cart_screen.dart';
+import 'package:coffee_shop/ui/user/widgets/favorites_view.dart';
+import 'package:coffee_shop/ui/user/widgets/populars_view.dart';
 import 'package:coffee_shop/ui/widgets/coffee_search.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,17 @@ class _UserScreenState extends State<UserScreen> {
         backgroundColor: AppColors.backgroundColor,
         title: const Text('Coffees'),
         actions: [
+          IconButton(
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CartScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.shopping_cart_outlined),
+          ),
           IconButton(
             onPressed: () async {
               await showSearch(

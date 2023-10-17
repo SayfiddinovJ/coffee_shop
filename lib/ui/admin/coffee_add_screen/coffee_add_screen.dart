@@ -1,6 +1,6 @@
-import 'package:coffee_shop/bloc/coffee_bloc.dart';
-import 'package:coffee_shop/bloc/coffee_event.dart';
-import 'package:coffee_shop/bloc/coffee_state.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_state.dart';
 import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
 import 'package:coffee_shop/data/models/status.dart';
 import 'package:coffee_shop/ui/admin/coffee_add_screen/widgets/drop_down.dart';

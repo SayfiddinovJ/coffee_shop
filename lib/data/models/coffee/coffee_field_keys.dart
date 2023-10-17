@@ -5,6 +5,7 @@ enum CoffeeFieldKeys {
   image,
   category,
   count,
+  status,
   id,
   createdAt,
 }

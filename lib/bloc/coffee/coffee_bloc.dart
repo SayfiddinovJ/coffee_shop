@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:coffee_shop/bloc/coffee_event.dart';
-import 'package:coffee_shop/bloc/coffee_state.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_state.dart';
 import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
 import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
 import 'package:coffee_shop/data/models/status.dart';
@@ -24,6 +24,7 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
             description: '',
             createdAt: '',
             count: '0',
+            status: '',
           ),
           status: FormStatus.pure,
           coffees: const [],
@@ -129,6 +130,11 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
       case CoffeeFieldKeys.category:
         currentCoffee = currentCoffee.copyWith(
             type: updateCurrentUserEvent.value as String);
+        break;
+
+      case CoffeeFieldKeys.status:
+        currentCoffee = currentCoffee.copyWith(
+            status: updateCurrentUserEvent.value as String);
         break;
     }
 

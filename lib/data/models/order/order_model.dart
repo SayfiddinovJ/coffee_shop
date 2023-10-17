@@ -4,7 +4,6 @@ class OrderModel {
   final String orderId;
   final List<CoffeeModel> orders;
   final String status;
-  final String name;
   final String phone;
   final String address;
   final String total;
@@ -14,12 +13,31 @@ class OrderModel {
     required this.orderId,
     required this.orders,
     required this.status,
-    required this.name,
     required this.phone,
     required this.address,
     required this.total,
     required this.createdAt,
   });
+
+  OrderModel copyWith({
+    String? orderId,
+    List<CoffeeModel>? orders,
+    String? status,
+    String? phone,
+    String? address,
+    String? total,
+    String? createdAt,
+  }) {
+    return OrderModel(
+      orderId: orderId ?? this.orderId,
+      orders: orders ?? this.orders,
+      status: status ?? this.status,
+      phone: phone ?? this.phone,
+      address: address ?? this.address,
+      total: total ?? this.total,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     final List<dynamic> orderList = json['orders'];
@@ -29,7 +47,6 @@ class OrderModel {
       orderId: json['orderId'],
       orders: orders,
       status: json['status'],
-      name: json['name'],
       phone: json['phone'],
       address: json['address'],
       total: json['total'],
@@ -44,7 +61,6 @@ class OrderModel {
       'orderId': orderId,
       'orders': orderList,
       'status': status,
-      'name': name,
       'phone': phone,
       'address': address,
       'total': total,
@@ -58,7 +74,6 @@ class OrderModel {
     orderId: $orderId,
     orders: $orders,
     status: $status,
-    name: $name,
     phone: $phone, 
     address: $address, 
     total: $total, 

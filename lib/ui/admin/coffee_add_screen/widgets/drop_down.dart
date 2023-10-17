@@ -1,5 +1,5 @@
-import 'package:coffee_shop/bloc/coffee_bloc.dart';
-import 'package:coffee_shop/bloc/coffee_event.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
+import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/data/models/category/categories.dart';
 import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
 import 'package:flutter/material.dart';

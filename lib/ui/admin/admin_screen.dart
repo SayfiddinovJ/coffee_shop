@@ -1,6 +1,9 @@
 import 'package:coffee_shop/data/models/order/order_model.dart';
 import 'package:coffee_shop/repository/order_repo.dart';
 import 'package:coffee_shop/ui/admin/coffees_screen/coffees_screen.dart';
+import 'package:coffee_shop/ui/admin/views/in_progress_orders_view.dart';
+import 'package:coffee_shop/ui/admin/views/not_confirmed_view.dart';
+import 'package:coffee_shop/ui/admin/views/sent_orders_view.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,15 +18,16 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        title: const Text('Admin'),
-        elevation: 0,
-        actions: [
-          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-          IconButton(
+        appBar: AppBar(
+          backgroundColor: AppColors.backgroundColor,
+          title: const Text('Admin'),
+          elevation: 0,
+          actions: [
+            IconButton(
               icon: const Icon(Icons.list),
               onPressed: () {
                 Navigator.push(
@@ -32,53 +36,53 @@ class _AdminScreenState extends State<AdminScreen> {
                     builder: (context) => const CoffeesScreen(),
                   ),
                 );
-              }),
-        ],
-      ),
-      body: StreamBuilder<List<OrderModel>>(
-        stream: context.read<OrderRepo>().getOrders(),
-        builder: (context, AsyncSnapshot<List<OrderModel>> snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data!.isEmpty
-                ? const Center(
-                    child: Text(
-                      'There are no orders yet',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                : ListView(
-                    children: [
-                      ...List.generate(
-                        snapshot.data!.length,
-                        (index) {
-                          OrderModel order = snapshot.data![index];
-                          return ListTile(
-                            title: Text(
-                              order.name,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-          } else if (snapshot.hasError) {
-            const Center(
-              child: Text(
-                'On error',
-                style: TextStyle(color: Colors.white),
-              ),
-            );
-          } else {
-            const Center(
-              child: Text(
-                'There are no coffees yet',
-                style: TextStyle(color: Colors.white),
-              ),
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+              },
+            ),
+          ],
+          bottom: const TabBar(
+            tabAlignment: TabAlignment.fill,
+            tabs: <Widget>[
+              Tab(text: "Not Accepted"),
+              Tab(text: 'In progress'),
+              Tab(text: 'Sent orders'),
+            ],
+          ),
+        ),
+        body: StreamBuilder<List<OrderModel>>(
+          stream: context.read<OrderRepo>().getOrders(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<OrderModel> notConfirmed = [];
+              List<OrderModel> inProgress = [];
+              List<OrderModel> sent = [];
+              snapshot.data!.map((e) {
+                if (e.status == 'Not Confirmed') {
+                  notConfirmed.add(e);
+                } else if (e.status == 'In Progress') {
+                  inProgress.add(e);
+                } else if (e.status == 'Sent') {
+                  sent.add(e);
+                }
+              });
+              return TabBarView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  NotConfirmedView(orders: notConfirmed),
+                  InProgressOrdersView(orders: inProgress),
+                  SentOrdersView(orders: sent),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              const Center(
+                child: Text(
+                  'On error',
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }
