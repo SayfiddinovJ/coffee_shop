@@ -1,6 +1,4 @@
 import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
-import 'package:coffee_shop/bloc/order/order_bloc.dart';
-import 'package:coffee_shop/cubit/page_view_cubit.dart';
 import 'package:coffee_shop/data/local/storage_repository.dart';
 import 'package:coffee_shop/repository/coffee_repo.dart';
 import 'package:coffee_shop/repository/order_repo.dart';
@@ -33,11 +31,6 @@ class App extends StatelessWidget {
             create: (context) =>
                 CoffeeBloc(coffeeRepo: context.read<CoffeeRepo>()),
           ),
-          BlocProvider(
-            create: (context) =>
-                OrderBloc(orderRepo: context.read<OrderRepo>()),
-          ),
-          BlocProvider(create: (context) => PageViewCubit()),
         ],
         child: const MyApp(),
       ),

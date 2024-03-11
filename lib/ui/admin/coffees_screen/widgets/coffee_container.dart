@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
-import 'package:coffee_shop/ui/coffee_detail/coffee_detail_screen.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,14 +13,7 @@ class CoffeeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(24.r),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CoffeeDetailScreen(coffee: coffee),
-          ),
-        );
-      },
+      onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 10.h,
