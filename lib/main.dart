@@ -1,7 +1,6 @@
 import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
 import 'package:coffee_shop/data/local/storage_repository.dart';
-import 'package:coffee_shop/repository/coffee_repo.dart';
-import 'package:coffee_shop/repository/order_repo.dart';
+import 'package:coffee_shop/repository/product_repo.dart';
 import 'package:coffee_shop/ui/home/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +21,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => CoffeeRepo()),
-        RepositoryProvider(create: (context) => OrderRepo()),
+        RepositoryProvider(create: (context) => ProductRepo()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) =>
-                CoffeeBloc(coffeeRepo: context.read<CoffeeRepo>()),
+                ProductBloc(coffeeRepo: context.read<ProductRepo>()),
           ),
         ],
         child: const MyApp(),

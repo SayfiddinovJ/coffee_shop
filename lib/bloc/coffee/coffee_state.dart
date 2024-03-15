@@ -1,47 +1,43 @@
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/data/models/status.dart';
 import 'package:equatable/equatable.dart';
 
-class CoffeeState extends Equatable {
+class ProductState extends Equatable {
   final String statusText;
-  final int count;
-  final CoffeeModel coffeeModel;
-  final List<CoffeeModel> coffees;
+  final ProductModel productModel;
+  final List<ProductModel> products;
   final FormStatus status;
 
-  const CoffeeState({
+  const ProductState({
     required this.statusText,
-    required this.coffeeModel,
-    required this.coffees,
+    required this.productModel,
+    required this.products,
     required this.status,
-    required this.count,
   });
 
-  CoffeeState copyWith({
+  ProductState copyWith({
     String? statusText,
     int? count,
-    CoffeeModel? coffeeModel,
-    List<CoffeeModel>? coffees,
+    ProductModel? productModel,
+    List<ProductModel>? products,
     FormStatus? status,
   }) {
-    return CoffeeState(
+    return ProductState(
       statusText: statusText ?? this.statusText,
-      coffeeModel: coffeeModel ?? this.coffeeModel,
-      coffees: coffees ?? this.coffees,
+      productModel: productModel ?? this.productModel,
+      products: products ?? this.products,
       status: status ?? this.status,
-      count: count ?? this.count,
     );
   }
 
   String canRequest() {
-    if (coffeeModel.name.isEmpty) return 'Name';
-    if (coffeeModel.price.isEmpty) return 'Price';
-    if (coffeeModel.type.isEmpty) return 'Type';
-    if (coffeeModel.image.isEmpty) return 'Image';
-    if (coffeeModel.description.isEmpty) return 'Description';
+    if (productModel.name.isEmpty) return 'Name';
+    if (productModel.price.isEmpty) return 'Price';
+    if (productModel.image.isEmpty) return 'Image';
+    if (productModel.description.isEmpty) return 'Description';
     return '';
   }
 
   @override
-  List<Object?> get props => [statusText, status, coffeeModel, coffees, count];
+  List<Object?> get props => [statusText, status, productModel, products];
 }

@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavoritesView extends StatelessWidget {
-  const FavoritesView({super.key, required this.coffees});
+  const FavoritesView({super.key, required this.products});
 
-  final List<CoffeeModel> coffees;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class FavoritesView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         children: [
           ...List.generate(
-            coffees.length,
+            products.length,
             (index) {
-              CoffeeModel coffee = coffees[index];
+              ProductModel coffee = products[index];
               return InkWell(
                 borderRadius: BorderRadius.circular(8.r),
                 onTap: () {},
@@ -49,15 +49,6 @@ class FavoritesView extends StatelessWidget {
                             ),
                           ),
                           8.ph,
-                          Text(
-                            coffee.type,
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white,
-                            ),
-                          ),
-                          4.ph,
                           SizedBox(
                             width: 240.w,
                             child: Text(

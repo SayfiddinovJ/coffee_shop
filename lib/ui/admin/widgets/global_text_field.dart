@@ -47,7 +47,7 @@ class GlobalTextField extends StatefulWidget {
 class _GlobalTextFieldState extends State<GlobalTextField> {
   late TextEditingController _internalController;
   final internalFocusNode = FocusNode();
-  Color color = const Color(0xFFFAFAFA);
+  Color color = const Color(0xFF000000);
 
   @override
   void initState() {
@@ -92,13 +92,13 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.grey),
         ),
       ),
       keyboardType: widget.keyboardType,

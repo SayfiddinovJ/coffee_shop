@@ -2,48 +2,45 @@ import 'dart:async';
 
 import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_state.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
+import 'package:coffee_shop/data/models/product/product_field_keys.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/data/models/status.dart';
 import 'package:coffee_shop/data/models/universal_data.dart';
-import 'package:coffee_shop/repository/coffee_repo.dart';
+import 'package:coffee_shop/repository/product_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
-  final CoffeeRepo coffeeRepo;
+class ProductBloc extends Bloc<ProductEvent, ProductState> {
+  final ProductRepo coffeeRepo;
 
-  CoffeeBloc({required this.coffeeRepo})
-      : super(CoffeeState(
-          coffeeModel: CoffeeModel(
-            coffeeId: '',
+  ProductBloc({required this.coffeeRepo})
+      : super(ProductState(
+          productModel: ProductModel(
+            productId: '',
             name: '',
-            type: '',
             price: '',
             image: '',
             description: '',
             createdAt: '',
             count: '0',
-            status: '',
           ),
           status: FormStatus.pure,
-          coffees: const [],
+          products: const [],
           statusText: '',
-          count: 0,
         )) {
-    on<CoffeeEvent>((event, emit) {});
-    on<AddCoffeeEvent>(addCoffee);
-    on<UpdateCoffeeEvent>(updateCoffee);
-    on<DeleteCoffeeEvent>(deleteCoffee);
-    on<UpdateCurrentCoffeeEvent>(updateCurrentCoffeeField);
+    on<ProductEvent>((event, emit) {});
+    on<AddProductEvent>(addProduct);
+    on<UpdateProductEvent>(updateProduct);
+    on<DeleteProductEvent>(deleteProduct);
+    on<UpdateCurrentProductEvent>(updateCurrentProductField);
   }
 
-  Future<void> addCoffee(
-      AddCoffeeEvent addCoffeeEvent, Emitter<CoffeeState> emit) async {
+  Future<void> addProduct(
+      AddProductEvent addProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
-    debugPrint('Add coffee bloc');
+    debugPrint('Add product bloc');
     UniversalData data =
-        await coffeeRepo.addCoffee(coffeeModel: state.coffeeModel);
+        await coffeeRepo.addProduct(productModel: state.productModel);
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success, statusText: 'Coffee added successfully'));
@@ -53,11 +50,11 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
     }
   }
 
-  Future<void> updateCoffee(
-      UpdateCoffeeEvent updateCoffeeEvent, Emitter<CoffeeState> emit) async {
+  Future<void> updateProduct(
+      UpdateProductEvent updateProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
     UniversalData data =
-        await coffeeRepo.updateCoffee(coffeeModel: state.coffeeModel);
+        await coffeeRepo.updateProduct(productModel: state.productModel);
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success,
@@ -68,11 +65,11 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
     }
   }
 
-  Future<void> deleteCoffee(
-      DeleteCoffeeEvent deleteCoffeeEvent, Emitter<CoffeeState> emit) async {
+  Future<void> deleteProduct(
+      DeleteProductEvent deleteProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
     UniversalData data =
-        await coffeeRepo.deleteCoffee(coffeeId: deleteCoffeeEvent.coffeeId);
+        await coffeeRepo.deleteProduct(productId: deleteProductEvent.productId);
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success,
@@ -87,58 +84,48 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
     return state.canRequest();
   }
 
-  updateCurrentCoffeeField(UpdateCurrentCoffeeEvent updateCurrentUserEvent,
-      Emitter<CoffeeState> emit) {
-    CoffeeModel currentCoffee = state.coffeeModel;
+  updateCurrentProductField(UpdateCurrentProductEvent updateCurrentProductEvent,
+      Emitter<ProductState> emit) {
+    ProductModel currentProduct = state.productModel;
 
-    switch (updateCurrentUserEvent.fieldKey) {
-      case CoffeeFieldKeys.name:
-        currentCoffee = currentCoffee.copyWith(
-            name: updateCurrentUserEvent.value as String);
+    switch (updateCurrentProductEvent.fieldKey) {
+      case ProductFieldKeys.name:
+        currentProduct = currentProduct.copyWith(
+            name: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.image:
-        currentCoffee = currentCoffee.copyWith(
-            image: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.image:
+        currentProduct = currentProduct.copyWith(
+            image: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.id:
-        currentCoffee = currentCoffee.copyWith(
-            coffeeId: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.id:
+        currentProduct = currentProduct.copyWith(
+            productId: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.createdAt:
-        currentCoffee = currentCoffee.copyWith(
-            createdAt: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.createdAt:
+        currentProduct = currentProduct.copyWith(
+            createdAt: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.price:
-        currentCoffee = currentCoffee.copyWith(
-            price: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.price:
+        currentProduct = currentProduct.copyWith(
+            price: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.count:
-        currentCoffee = currentCoffee.copyWith(
-            count: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.count:
+        currentProduct = currentProduct.copyWith(
+            count: updateCurrentProductEvent.value as String);
         break;
 
-      case CoffeeFieldKeys.description:
-        currentCoffee = currentCoffee.copyWith(
-            description: updateCurrentUserEvent.value as String);
-        break;
-
-      case CoffeeFieldKeys.category:
-        currentCoffee = currentCoffee.copyWith(
-            type: updateCurrentUserEvent.value as String);
-        break;
-
-      case CoffeeFieldKeys.status:
-        currentCoffee = currentCoffee.copyWith(
-            status: updateCurrentUserEvent.value as String);
+      case ProductFieldKeys.description:
+        currentProduct = currentProduct.copyWith(
+            description: updateCurrentProductEvent.value as String);
         break;
     }
 
-    debugPrint("Coffee Model: $currentCoffee");
-    emit(state.copyWith(coffeeModel: currentCoffee));
+    debugPrint("Coffee Model: $currentProduct");
+    emit(state.copyWith(productModel: currentProduct));
   }
 }

@@ -1,8 +1,8 @@
 final List<String> categories = [
-  "Espresso",
-  "Cappuccino",
-  "Latte",
-  "Americano",
-  "Macchiato",
-  "Mocha",
+  "Go'sht",
+  "Sut",
+  "Temirchilik",
+  "Pecheniy",
+  "Don",
+  "Suvlar",
 ];

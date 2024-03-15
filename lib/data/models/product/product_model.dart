@@ -1,59 +1,49 @@
-class CoffeeModel {
-  final String coffeeId;
+class ProductModel {
+  final String productId;
   final String name;
-  final String type;
   final String price;
   final String count;
   final String image;
-  final String status;
   final String description;
   final String createdAt;
 
-  CoffeeModel({
-    required this.coffeeId,
+  ProductModel({
+    required this.productId,
     required this.name,
-    required this.type,
     required this.price,
     required this.count,
     required this.image,
-    required this.status,
     required this.description,
     required this.createdAt,
   });
 
-  CoffeeModel copyWith({
-    String? coffeeId,
+  ProductModel copyWith({
+    String? productId,
     String? name,
-    String? type,
     String? price,
     String? count,
     String? image,
-    String? status,
     String? description,
     String? createdAt,
   }) {
-    return CoffeeModel(
-      coffeeId: coffeeId ?? this.coffeeId,
+    return ProductModel(
+      productId: productId ?? this.productId,
       name: name ?? this.name,
-      type: type ?? this.type,
       price: price ?? this.price,
       count: count ?? this.count,
       image: image ?? this.image,
-      status: status ?? this.status,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
     );
   }
 
-  factory CoffeeModel.fromJson(Map<String, dynamic> json) {
-    return CoffeeModel(
-      coffeeId: json['coffeeId'] ?? '',
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      productId: json['coffeeId'] ?? '',
       name: json['name'] ?? '',
-      type: json['type'] ?? '',
       price: json['price'] ?? '',
       count: json['count'] ?? '',
       image: json['image'] ?? '',
-      status: json['status'] ?? '',
       description: json['description'] ?? '',
       createdAt: json['createdAt'] ?? '',
     );
@@ -61,13 +51,11 @@ class CoffeeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'coffeeId': coffeeId,
+      'coffeeId': productId,
       'name': name,
-      'type': type,
       'price': price,
       'count': count,
       'image': image,
-      'status': status,
       'description': description,
       'createdAt': createdAt,
     };
@@ -76,13 +64,11 @@ class CoffeeModel {
   @override
   String toString() {
     return '''
-    coffeeId: $coffeeId,
+    coffeeId: $productId,
     name: $name,
-    type: $type,
     price: $price,
     count: $count,
     image: $image,
-    status: $status,
     description: $description
     createdAt: $createdAt
     ''';

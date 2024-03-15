@@ -1,11 +1,9 @@
-enum CoffeeFieldKeys {
+enum ProductFieldKeys {
   name,
   price,
   description,
   image,
-  category,
   count,
-  status,
   id,
   createdAt,
 }

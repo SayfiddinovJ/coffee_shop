@@ -1,23 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/data/models/order/order_model.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/data/models/universal_data.dart';
 import 'package:flutter/foundation.dart';
 
-class OrderRepo {
-  Future<UniversalData> addOrder({required OrderModel orderModel}) async {
+class ProductRepo {
+  Future<UniversalData> addProduct({required ProductModel productModel}) async {
     try {
-      DocumentReference newOrder = await FirebaseFirestore.instance
-          .collection("orders")
-          .add(orderModel.toJson());
+      DocumentReference newProduct = await FirebaseFirestore.instance
+          .collection("products")
+          .add(productModel.toJson());
 
       await FirebaseFirestore.instance
-          .collection("orders")
-          .doc(newOrder.id)
+          .collection("products")
+          .doc(newProduct.id)
           .update({
-        "orderId": newOrder.id,
+        "productId": newProduct.id,
       });
-
-      return UniversalData(data: "Order added!");
+      return UniversalData(data: 'Product added!');
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -25,14 +24,14 @@ class OrderRepo {
     }
   }
 
-  Future<UniversalData> updateOrder({required OrderModel orderModel}) async {
+  Future<UniversalData> updateProduct({required ProductModel productModel}) async {
     try {
       await FirebaseFirestore.instance
-          .collection("orders")
-          .doc(orderModel.orderId)
-          .update(orderModel.toJson());
+          .collection('products')
+          .doc(productModel.productId)
+          .update(productModel.toJson());
 
-      return UniversalData(data: "Order updated!");
+      return UniversalData(data: "Product updated!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -40,14 +39,14 @@ class OrderRepo {
     }
   }
 
-  Future<UniversalData> deleteOrder({required String orderId}) async {
+  Future<UniversalData> deleteProduct({required String productId}) async {
     try {
       await FirebaseFirestore.instance
-          .collection("orders")
-          .doc(orderId)
+          .collection('products')
+          .doc(productId)
           .delete();
 
-      return UniversalData(data: "Order deleted!");
+      return UniversalData(data: "Product deleted!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -55,12 +54,12 @@ class OrderRepo {
     }
   }
 
-  Stream<List<OrderModel>> getOrders() {
+  Stream<List<ProductModel>> getProducts() {
     try {
       final collectionStream =
-          FirebaseFirestore.instance.collection('orders').snapshots();
+      FirebaseFirestore.instance.collection('products').snapshots();
       return collectionStream.map((snapshot) =>
-          snapshot.docs.map((doc) => OrderModel.fromJson(doc.data())).toList());
+          snapshot.docs.map((doc) => ProductModel.fromJson(doc.data())).toList());
     } on FirebaseException catch (e) {
       debugPrint('Firebase Exception: $e');
       return Stream.value([]);

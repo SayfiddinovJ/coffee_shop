@@ -1,41 +1,18 @@
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
-import 'package:coffee_shop/ui/admin/coffees_screen/widgets/coffee_container.dart';
-import 'package:coffee_shop/utils/app_colors/app_colors.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
+import 'package:coffee_shop/ui/admin/widgets/product_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
-  final List<CoffeeModel> coffeeList;
+class ProductSearchDelegate extends SearchDelegate<ProductModel> {
+  final List<ProductModel> productList;
 
-  CoffeeSearchDelegate(this.coffeeList);
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-      appBarTheme: theme.appBarTheme.copyWith(
-        backgroundColor: AppColors.backgroundColor,
-        iconTheme: const IconThemeData(color: Colors.white),
-        actionsIconTheme: const IconThemeData(color: Colors.white),
-      ),
-      inputDecorationTheme: const InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white54),
-      ),
-      textTheme: TextTheme(
-        titleLarge: TextStyle(color: Colors.white, fontSize: 18.sp),
-      ),
-      scaffoldBackgroundColor: AppColors.backgroundColor,
-    );
-  }
+  ProductSearchDelegate(this.productList);
 
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: const Icon(
-          Icons.clear,
-          color: Colors.white,
-        ),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -46,23 +23,18 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(
-        Icons.arrow_back,
-        color: Colors.white,
-      ),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(
           context,
-          CoffeeModel(
-            coffeeId: '',
+          ProductModel(
+            productId: '',
             name: '',
-            type: '',
             price: '',
             image: '',
             description: '',
             createdAt: '',
             count: '0',
-            status: '',
           ),
         );
       },
@@ -71,7 +43,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final filteredCoffeeList = coffeeList
+    final filteredCoffeeList = productList
         .where(
             (coffee) => coffee.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -82,7 +54,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
         final coffee = filteredCoffeeList[index];
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-          child: CoffeeContainer(coffee: coffee),
+          child: ProductContainer(product: coffee),
         );
       },
     );
@@ -91,8 +63,8 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
   @override
   Widget buildSuggestions(BuildContext context) {
     final suggestionList = query.isEmpty
-        ? coffeeList
-        : coffeeList
+        ? productList
+        : productList
             .where((coffee) =>
                 coffee.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -103,7 +75,7 @@ class CoffeeSearchDelegate extends SearchDelegate<CoffeeModel> {
         final coffee = suggestionList[index];
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-          child: CoffeeContainer(coffee: coffee),
+          child: ProductContainer(product: coffee),
         );
       },
     );

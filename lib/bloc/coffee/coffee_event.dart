@@ -1,23 +1,23 @@
-import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
+import 'package:coffee_shop/data/models/product/product_field_keys.dart';
 
-abstract class CoffeeEvent {}
+abstract class ProductEvent {}
 
-class GetCoffeeEvent extends CoffeeEvent {}
+class GetProductEvent extends ProductEvent {}
 
-class AddCoffeeEvent extends CoffeeEvent {
+class AddProductEvent extends ProductEvent {
 }
 
-class UpdateCoffeeEvent extends CoffeeEvent {}
+class UpdateProductEvent extends ProductEvent {}
 
-class UpdateCurrentCoffeeEvent extends CoffeeEvent {
-  final CoffeeFieldKeys fieldKey;
+class UpdateCurrentProductEvent extends ProductEvent {
+  final ProductFieldKeys fieldKey;
   final dynamic value;
 
-  UpdateCurrentCoffeeEvent({required this.fieldKey, required this.value});
+  UpdateCurrentProductEvent({required this.fieldKey, required this.value});
 }
 
-class DeleteCoffeeEvent extends CoffeeEvent {
-  final String coffeeId;
+class DeleteProductEvent extends ProductEvent {
+  final String productId;
 
-  DeleteCoffeeEvent({required this.coffeeId});
+  DeleteProductEvent({required this.productId});
 }

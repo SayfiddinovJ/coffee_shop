@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CoffeeContainer extends StatelessWidget {
-  const CoffeeContainer({super.key, required this.coffee});
+class ProductContainer extends StatelessWidget {
+  const ProductContainer({super.key, required this.product});
 
-  final CoffeeModel coffee;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class CoffeeContainer extends StatelessWidget {
             Row(
               children: [
                 Hero(
-                  tag: coffee.coffeeId,
+                  tag: product.productId,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.r),
                     child: CachedNetworkImage(
-                      imageUrl: coffee.image,
+                      imageUrl: product.image,
                       fit: BoxFit.fill,
                       height: 100.w,
                       width: 100.w,
@@ -45,20 +45,9 @@ class CoffeeContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        coffee.name,
+                        product.name,
                         style: TextStyle(
-                          color: Colors.white,
                           fontSize: 20.sp,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 2,
-                      ),
-                      Text(
-                        coffee.type,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                           overflow: TextOverflow.ellipsis,
                         ),

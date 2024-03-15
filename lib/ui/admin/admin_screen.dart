@@ -1,12 +1,11 @@
-import 'package:coffee_shop/data/models/order/order_model.dart';
-import 'package:coffee_shop/repository/order_repo.dart';
-import 'package:coffee_shop/ui/admin/coffees_screen/coffees_screen.dart';
-import 'package:coffee_shop/ui/admin/views/in_progress_orders_view.dart';
-import 'package:coffee_shop/ui/admin/views/not_confirmed_view.dart';
-import 'package:coffee_shop/ui/admin/views/sent_orders_view.dart';
-import 'package:coffee_shop/utils/app_colors/app_colors.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
+import 'package:coffee_shop/repository/product_repo.dart';
+import 'package:coffee_shop/ui/admin/product_add_screen/product_add_screen.dart';
+import 'package:coffee_shop/ui/admin/widgets/product_container.dart';
+import 'package:coffee_shop/ui/widgets/product_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -16,73 +15,64 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+  List<ProductModel> products = [];
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        appBar: AppBar(
-          backgroundColor: AppColors.backgroundColor,
-          title: const Text('Admin'),
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.list),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CoffeesScreen(),
-                  ),
-                );
-              },
-            ),
-          ],
-          bottom: const TabBar(
-            tabAlignment: TabAlignment.fill,
-            tabs: <Widget>[
-              Tab(text: "Not Accepted"),
-              Tab(text: 'In progress'),
-              Tab(text: 'Sent orders'),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(products.isEmpty ? 'Admin' : 'Products'),
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await showSearch(
+                  context: context, delegate: ProductSearchDelegate(products));
+            },
+            icon: const Icon(Icons.search),
           ),
-        ),
-        body: StreamBuilder<List<OrderModel>>(
-          stream: context.read<OrderRepo>().getOrders(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<OrderModel> notConfirmed = [];
-              List<OrderModel> inProgress = [];
-              List<OrderModel> sent = [];
-              snapshot.data!.map((e) {
-                if (e.status == 'Not Confirmed') {
-                  notConfirmed.add(e);
-                } else if (e.status == 'In Progress') {
-                  inProgress.add(e);
-                } else if (e.status == 'Sent') {
-                  sent.add(e);
-                }
-              });
-              return TabBarView(
-                physics: const BouncingScrollPhysics(),
+        ],
+      ),
+      body: StreamBuilder<List<ProductModel>>(
+        stream: context.read<ProductRepo>().getProducts(),
+        builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.isNotEmpty) {
+              return ListView(
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
                 children: [
-                  NotConfirmedView(orders: notConfirmed),
-                  InProgressOrdersView(orders: inProgress),
-                  SentOrdersView(orders: sent),
+                  ...List.generate(
+                    snapshot.data!.length,
+                    (index) {
+                      ProductModel product = snapshot.data![index];
+                      products = snapshot.data!;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                        child: ProductContainer(product: product),
+                      );
+                    },
+                  )
                 ],
               );
-            } else if (snapshot.hasError) {
-              const Center(
-                child: Text(
-                  'On error',
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
+            } else {
+              return const Center(child: Text('There are no products yet'));
             }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('On error'));
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProductAddScreen(),
+            ),
+          );
+        },
       ),
     );
   }

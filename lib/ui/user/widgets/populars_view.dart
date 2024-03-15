@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PopularsView extends StatelessWidget {
-  const PopularsView({super.key, required this.coffee});
+  const PopularsView({super.key, required this.product});
 
-  final CoffeeModel coffee;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class PopularsView extends StatelessWidget {
                   topLeft: Radius.circular(8.r),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: coffee.image,
+                  imageUrl: product.image,
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
                 ),
@@ -43,19 +43,10 @@ class PopularsView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        coffee.type,
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      4.ph,
                       SizedBox(
                         width: 240.w,
                         child: Text(
-                          coffee.name,
+                          product.name,
                           style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
@@ -66,7 +57,7 @@ class PopularsView extends StatelessWidget {
                       ),
                       16.ph,
                       Text(
-                        coffee.price,
+                        product.price,
                         style: TextStyle(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,

@@ -1,10 +1,9 @@
 import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_state.dart';
-import 'package:coffee_shop/data/models/coffee/coffee_field_keys.dart';
+import 'package:coffee_shop/data/models/product/product_field_keys.dart';
 import 'package:coffee_shop/data/models/universal_data.dart';
 import 'package:coffee_shop/ui/widgets/image_uploader.dart';
-import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:coffee_shop/utils/dialogs/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +22,7 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoffeeBloc, CoffeeState>(
+    return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(10.r),
@@ -37,16 +36,14 @@ class _ImageUploadState extends State<ImageUpload> {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
-                color: Colors.white10,
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
               ),
-              child: state.coffeeModel.image.isEmpty
+              child: state.productModel.image.isEmpty
                   ? const Center(
-                      child: Text(
-                        'Choosing a coffee picture',
-                        style: TextStyle(color: AppColors.white),
-                      ),
+                      child: Text('Choosing a product picture'),
                     )
-                  : Image.network(state.coffeeModel.image, fit: BoxFit.fill),
+                  : Image.network(state.productModel.image, fit: BoxFit.fill),
             ),
           ),
         );
@@ -62,11 +59,11 @@ class _ImageUploadState extends State<ImageUpload> {
         return Container(
           padding: const EdgeInsets.all(24),
           decoration: const BoxDecoration(
-            color: Colors.black,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
+            color: Colors.white,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -77,25 +74,15 @@ class _ImageUploadState extends State<ImageUpload> {
                 },
                 leading: const Icon(
                   Icons.camera_alt,
-                  color: Colors.white,
                 ),
-                title: const Text(
-                  "Select from Camera",
-                  style: TextStyle(color: Colors.white),
-                ),
+                title: const Text("Select from Camera"),
               ),
               ListTile(
                 onTap: () {
                   _getFromGallery(context);
                 },
-                leading: const Icon(
-                  Icons.photo,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  "Select from Gallery",
-                  style: TextStyle(color: Colors.white),
-                ),
+                leading: const Icon(Icons.photo),
+                title: const Text("Select from Gallery"),
               ),
             ],
           ),
@@ -116,8 +103,8 @@ class _ImageUploadState extends State<ImageUpload> {
       UniversalData data = await imageUploader(xFile);
       if (context.mounted) {
         hideLoading(context: context);
-        context.read<CoffeeBloc>().add(UpdateCurrentCoffeeEvent(
-            fieldKey: CoffeeFieldKeys.image, value: data.data));
+        context.read<ProductBloc>().add(UpdateCurrentProductEvent(
+            fieldKey: ProductFieldKeys.image, value: data.data));
         Navigator.pop(context);
       }
     }
@@ -134,8 +121,8 @@ class _ImageUploadState extends State<ImageUpload> {
       UniversalData data = await imageUploader(xFile);
       if (context.mounted) {
         hideLoading(context: context);
-        context.read<CoffeeBloc>().add(UpdateCurrentCoffeeEvent(
-            fieldKey: CoffeeFieldKeys.image, value: data.data));
+        context.read<ProductBloc>().add(UpdateCurrentProductEvent(
+            fieldKey: ProductFieldKeys.image, value: data.data));
         Navigator.pop(context);
       }
     }

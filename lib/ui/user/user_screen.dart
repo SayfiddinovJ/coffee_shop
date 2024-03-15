@@ -1,9 +1,8 @@
-import 'package:coffee_shop/data/models/coffee/coffee_model.dart';
-import 'package:coffee_shop/repository/coffee_repo.dart';
-import 'package:coffee_shop/ui/user/cart_screens/cart_screen.dart';
+import 'package:coffee_shop/data/models/product/product_model.dart';
+import 'package:coffee_shop/repository/product_repo.dart';
 import 'package:coffee_shop/ui/user/widgets/favorites_view.dart';
 import 'package:coffee_shop/ui/user/widgets/populars_view.dart';
-import 'package:coffee_shop/ui/widgets/coffee_search.dart';
+import 'package:coffee_shop/ui/widgets/product_search.dart';
 import 'package:coffee_shop/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  List<CoffeeModel> coffees = [];
+  List<ProductModel> products = [];
 
   @override
   Widget build(BuildContext context) {
@@ -25,34 +24,27 @@ class _UserScreenState extends State<UserScreen> {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
-        title: const Text('Coffees'),
+        title: const Text('Products'),
         actions: [
           IconButton(
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CartScreen(),
-                ),
-              );
-            },
+            onPressed: () async {},
             icon: const Icon(Icons.shopping_cart_outlined),
           ),
           IconButton(
             onPressed: () async {
               await showSearch(
-                  context: context, delegate: CoffeeSearchDelegate(coffees));
+                  context: context, delegate: ProductSearchDelegate(products));
             },
             icon: const Icon(Icons.search),
           ),
         ],
         elevation: 0,
       ),
-      body: StreamBuilder<List<CoffeeModel>>(
-        stream: context.read<CoffeeRepo>().getCoffees(),
-        builder: (context, AsyncSnapshot<List<CoffeeModel>> snapshot) {
+      body: StreamBuilder<List<ProductModel>>(
+        stream: context.read<ProductRepo>().getProducts(),
+        builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData) {
-            coffees = snapshot.data!;
+            products = snapshot.data!;
             return CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
@@ -69,7 +61,7 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FavoritesView(coffees: snapshot.data!),
+                  child: FavoritesView(products: snapshot.data!),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -96,8 +88,8 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        CoffeeModel coffee = snapshot.data![index];
-                        return PopularsView(coffee: coffee);
+                        ProductModel product = snapshot.data![index];
+                        return PopularsView(product: product);
                       },
                       childCount: snapshot.data!.length,
                     ),
@@ -115,7 +107,7 @@ class _UserScreenState extends State<UserScreen> {
           } else {
             const Center(
               child: Text(
-                'There are no coffees yet',
+                'There are no products yet',
                 style: TextStyle(color: Colors.white),
               ),
             );
