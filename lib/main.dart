@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) =>
-                ProductBloc(coffeeRepo: context.read<ProductRepo>()),
+                ProductBloc(productRepo: context.read<ProductRepo>()),
           ),
         ],
         child: const MyApp(),

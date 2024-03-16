@@ -1,5 +1,5 @@
 class ProductModel {
-  final String productId;
+  final String? productId;
   final String name;
   final String price;
   final String count;
@@ -39,7 +39,7 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      productId: json['coffeeId'] ?? '',
+      productId: json['productId'] ?? '',
       name: json['name'] ?? '',
       price: json['price'] ?? '',
       count: json['count'] ?? '',
@@ -51,7 +51,7 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'coffeeId': productId,
+      'productId': productId,
       'name': name,
       'price': price,
       'count': count,
@@ -64,7 +64,7 @@ class ProductModel {
   @override
   String toString() {
     return '''
-    coffeeId: $productId,
+    productId: $productId,
     name: $name,
     price: $price,
     count: $count,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_state.dart';
 import 'package:coffee_shop/data/models/product/product_field_keys.dart';
@@ -11,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final ProductRepo coffeeRepo;
+  final ProductRepo productRepo;
 
-  ProductBloc({required this.coffeeRepo})
+  ProductBloc({required this.productRepo})
       : super(ProductState(
           productModel: ProductModel(
             productId: '',
@@ -40,7 +41,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
     debugPrint('Add product bloc');
     UniversalData data =
-        await coffeeRepo.addProduct(productModel: state.productModel);
+        await productRepo.addProduct(productModel: state.productModel);
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success, statusText: 'Coffee added successfully'));
@@ -54,7 +55,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       UpdateProductEvent updateProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
     UniversalData data =
-        await coffeeRepo.updateProduct(productModel: state.productModel);
+        await productRepo.updateProduct(productModel: state.productModel);
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success,
@@ -68,15 +69,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Future<void> deleteProduct(
       DeleteProductEvent deleteProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
-    UniversalData data =
-        await coffeeRepo.deleteProduct(productId: deleteProductEvent.productId);
-    if (data.error.isEmpty) {
+    UniversalData data = UniversalData();
+    try {
+      await FirebaseFirestore.instance
+          .collection('products')
+          .doc(deleteProductEvent.productId)
+          .delete();
       emit(state.copyWith(
           status: FormStatus.success,
-          statusText: 'Coffee deleted successfully'));
-    } else {
+          statusText: 'Product deleted successfully'));
+    } catch (e) {
       emit(state.copyWith(
-          status: FormStatus.failure, statusText: 'Coffee deleted failure'));
+          status: FormStatus.failure, statusText: 'Product deleted failure'));
+      debugPrint('Error: ${e.toString()}');
     }
   }
 

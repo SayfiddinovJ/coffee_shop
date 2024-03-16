@@ -24,7 +24,8 @@ class ProductRepo {
     }
   }
 
-  Future<UniversalData> updateProduct({required ProductModel productModel}) async {
+  Future<UniversalData> updateProduct(
+      {required ProductModel productModel}) async {
     try {
       await FirebaseFirestore.instance
           .collection('products')
@@ -45,7 +46,6 @@ class ProductRepo {
           .collection('products')
           .doc(productId)
           .delete();
-
       return UniversalData(data: "Product deleted!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
@@ -57,9 +57,10 @@ class ProductRepo {
   Stream<List<ProductModel>> getProducts() {
     try {
       final collectionStream =
-      FirebaseFirestore.instance.collection('products').snapshots();
-      return collectionStream.map((snapshot) =>
-          snapshot.docs.map((doc) => ProductModel.fromJson(doc.data())).toList());
+          FirebaseFirestore.instance.collection('products').snapshots();
+      return collectionStream.map((snapshot) => snapshot.docs
+          .map((doc) => ProductModel.fromJson(doc.data()))
+          .toList());
     } on FirebaseException catch (e) {
       debugPrint('Firebase Exception: $e');
       return Stream.value([]);
