@@ -34,7 +34,7 @@ class ProductSearchDelegate extends SearchDelegate<ProductModel> {
             image: '',
             description: '',
             createdAt: '',
-            count: '0',
+            count: '1', piece: 'KG',
           ),
         );
       },

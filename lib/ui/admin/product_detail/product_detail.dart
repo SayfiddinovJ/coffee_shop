@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/data/models/product/product_model.dart';
+import 'package:coffee_shop/ui/admin/widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,9 +33,8 @@ class ProductDetail extends StatelessWidget {
                     TextButton(
                       child: const Text('Delete'),
                       onPressed: () {
-                        print(product.productId);
-                        context.read<ProductBloc>().add(DeleteProductEvent(
-                            productId: product.productId ?? ''));
+                        context.read<ProductBloc>().add(
+                            DeleteProductEvent(productId: product.productId));
                         Navigator.pop(context);
                         // Navigator.pop(context);
                       },
@@ -55,42 +55,55 @@ class ProductDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: product.productId ?? 'null',
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: CachedNetworkImage(
-                  height: 450.h,
-                  width: MediaQuery.of(context).size.width,
-                  imageUrl: product.image,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PhotoViewer(url: product.image),
+                  ),
+                );
+              },
+              child: Hero(
+                tag: product.productId,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: CachedNetworkImage(
+                    height: 450.h,
+                    width: MediaQuery.of(context).size.width,
+                    imageUrl: product.image,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Name - ${product.name}',
-              style: const TextStyle(
-                fontSize: 20,
+              style:  TextStyle(
+                fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'Price - ${product.price} so\'m',
+              'Price - ${product.price} so\'m / 1 ${product.piece}',
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
+              maxLines: 2,
             ),
             Text(
               'Description - ${product.description}',
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
+              maxLines: 4,
             ),
           ],
         ),

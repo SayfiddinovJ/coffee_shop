@@ -30,7 +30,7 @@ class ProductContainer extends StatelessWidget {
             Row(
               children: [
                 Hero(
-                  tag: product.productId ?? 'null',
+                  tag: product.productId ,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.r),
                     child: CachedNetworkImage(

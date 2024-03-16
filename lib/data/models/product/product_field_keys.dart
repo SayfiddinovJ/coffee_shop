@@ -6,4 +6,5 @@ enum ProductFieldKeys {
   count,
   id,
   createdAt,
+  piece,
 }

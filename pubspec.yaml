@@ -23,6 +23,8 @@ dependencies:
   equatable: ^2.0.5
   cached_network_image: ^3.3.0
   shared_preferences: ^2.2.2
+  dropdown_button2: ^2.3.9
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:
@@ -31,7 +33,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:

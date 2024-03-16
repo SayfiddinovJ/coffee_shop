@@ -1,11 +1,12 @@
 class ProductModel {
-  final String? productId;
+  final String productId;
   final String name;
   final String price;
   final String count;
   final String image;
   final String description;
   final String createdAt;
+  final String piece;
 
   ProductModel({
     required this.productId,
@@ -15,6 +16,7 @@ class ProductModel {
     required this.image,
     required this.description,
     required this.createdAt,
+    required this.piece,
   });
 
   ProductModel copyWith({
@@ -25,6 +27,7 @@ class ProductModel {
     String? image,
     String? description,
     String? createdAt,
+    String? piece,
   }) {
     return ProductModel(
       productId: productId ?? this.productId,
@@ -34,6 +37,7 @@ class ProductModel {
       image: image ?? this.image,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
+      piece: piece?? this.piece,
     );
   }
 
@@ -46,6 +50,7 @@ class ProductModel {
       image: json['image'] ?? '',
       description: json['description'] ?? '',
       createdAt: json['createdAt'] ?? '',
+      piece: json['piece']?? '',
     );
   }
 
@@ -58,6 +63,7 @@ class ProductModel {
       'image': image,
       'description': description,
       'createdAt': createdAt,
+      'piece': piece,
     };
   }
 
@@ -71,6 +77,7 @@ class ProductModel {
     image: $image,
     description: $description
     createdAt: $createdAt
+    piece: $piece
     ''';
   }
 }

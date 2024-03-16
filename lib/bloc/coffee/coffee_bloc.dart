@@ -23,7 +23,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             image: '',
             description: '',
             createdAt: '',
-            count: '0',
+            count: '1',
+            piece: 'KG',
           ),
           status: FormStatus.pure,
           products: const [],
@@ -69,7 +70,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Future<void> deleteProduct(
       DeleteProductEvent deleteProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
-    UniversalData data = UniversalData();
     try {
       await FirebaseFirestore.instance
           .collection('products')
@@ -127,6 +127,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       case ProductFieldKeys.description:
         currentProduct = currentProduct.copyWith(
             description: updateCurrentProductEvent.value as String);
+        break;
+      case ProductFieldKeys.piece:
+        currentProduct = currentProduct.copyWith(
+            piece: updateCurrentProductEvent.value as String);
         break;
     }
 

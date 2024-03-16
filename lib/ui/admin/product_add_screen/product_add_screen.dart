@@ -9,6 +9,7 @@ import 'package:coffee_shop/ui/widgets/global_button.dart';
 import 'package:coffee_shop/utils/dialogs/show_dialog.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:coffee_shop/utils/formats/price_formatter.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,10 @@ class ProductAddScreen extends StatefulWidget {
 }
 
 class _ProductAddScreenState extends State<ProductAddScreen> {
+  int selectedUnitIndex = 0;
+  List<String> units = ['Kilogram', 'Litr', 'Dona'];
+  String selectedUnit = 'Kilogram';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +76,41 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       },
                     ),
                     24.ph,
+                    DropdownButtonFormField2<String>(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey, width: 1),
+                        ),
+                      ),
+                      value: selectedUnit,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          context.read<ProductBloc>().add(
+                                UpdateCurrentProductEvent(
+                                  fieldKey: ProductFieldKeys.piece,
+                                  value: newValue,
+                                ),
+                              );
+                          selectedUnit = newValue!;
+                        });
+                      },
+                      items: units
+                          .map(
+                            (String item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    24.ph,
                     SizedBox(
                       height: 120.h,
                       child: GlobalTextField(
@@ -117,9 +157,9 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
             const Center(child: CircularProgressIndicator());
           }
           if (state.status == FormStatus.success) {
+            Navigator.pop(context);
             context.read<ProductBloc>().add(UpdateCurrentProductEvent(
                 fieldKey: ProductFieldKeys.image, value: ''));
-            Navigator.pop(context);
           }
         },
       ),
