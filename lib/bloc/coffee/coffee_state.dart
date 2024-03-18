@@ -34,6 +34,7 @@ class ProductState extends Equatable {
     if (productModel.name.isEmpty) return 'Name';
     if (productModel.price.isEmpty) return 'Price';
     if (productModel.image.isEmpty) return 'Image';
+    if (productModel.barcode.isEmpty) return 'Barcode';
     if (productModel.description.isEmpty) return 'Description';
     return '';
   }

@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_bloc.dart';
 import 'package:coffee_shop/bloc/coffee/coffee_event.dart';
 import 'package:coffee_shop/data/models/product/product_model.dart';
+import 'package:coffee_shop/ui/admin/product_edit/product_edit_screen.dart';
 import 'package:coffee_shop/ui/admin/widgets/photo_viewer.dart';
+import 'package:coffee_shop/ui/widgets/global_button.dart';
+import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +39,7 @@ class ProductDetail extends StatelessWidget {
                         context.read<ProductBloc>().add(
                             DeleteProductEvent(productId: product.productId));
                         Navigator.pop(context);
-                        // Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                     ),
                   ],
@@ -50,7 +53,8 @@ class ProductDetail extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,28 +87,65 @@ class ProductDetail extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Name - ${product.name}',
-              style:  TextStyle(
-                fontSize: 28.sp,
-                fontWeight: FontWeight.bold,
+              'Name',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.grey,
               ),
             ),
             Text(
-              'Price - ${product.price} so\'m / 1 ${product.piece}',
-              style: const TextStyle(
-                fontSize: 25,
+              product.name,
+              style: TextStyle(
+                fontSize: 28.sp,
+                fontWeight: FontWeight.bold,
+                overflow: TextOverflow.fade,
+              ),
+              maxLines: 3,
+            ),
+            Text(
+              'Price',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.grey,
+              ),
+              maxLines: 2,
+            ),
+            Text(
+              '${product.price} so\'m / 1 ${product.piece}',
+              style: TextStyle(
+                fontSize: 25.sp,
                 fontWeight: FontWeight.bold,
               ),
               maxLines: 2,
             ),
             Text(
-              'Description - ${product.description}',
-              style: const TextStyle(
-                fontSize: 22,
+              'Description',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.grey,
+              ),
+            ),
+            Text(
+              product.description,
+              style: TextStyle(
+                fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
               ),
               maxLines: 4,
             ),
+            10.ph,
+            GlobalButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductEditScreen(product: product),
+                  ),
+                );
+              },
+              data: 'Edit product',
+            ),
+            24.ph,
           ],
         ),
       ),

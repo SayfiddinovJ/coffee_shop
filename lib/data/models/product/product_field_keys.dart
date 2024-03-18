@@ -7,4 +7,5 @@ enum ProductFieldKeys {
   id,
   createdAt,
   piece,
+  barcode,
 }

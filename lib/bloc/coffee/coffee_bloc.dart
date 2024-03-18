@@ -25,6 +25,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             createdAt: '',
             count: '1',
             piece: 'KG',
+            barcode: '',
           ),
           status: FormStatus.pure,
           products: const [],
@@ -33,6 +34,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ProductEvent>((event, emit) {});
     on<AddProductEvent>(addProduct);
     on<UpdateProductEvent>(updateProduct);
+    on<PureEvent>(pureProduct);
     on<DeleteProductEvent>(deleteProduct);
     on<UpdateCurrentProductEvent>(updateCurrentProductField);
   }
@@ -52,6 +54,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
+  pureProduct(PureEvent event, Emitter<ProductState> emit) {
+    emit(state.copyWith(statusText: 'Pure', status: FormStatus.pure));
+  }
+
   Future<void> updateProduct(
       UpdateProductEvent updateProductEvent, Emitter<ProductState> emit) async {
     emit(state.copyWith(statusText: 'Loading', status: FormStatus.loading));
@@ -60,10 +66,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (data.error.isEmpty) {
       emit(state.copyWith(
           status: FormStatus.success,
-          statusText: 'Coffee update successfully'));
+          statusText: 'Product update successfully'));
     } else {
       emit(state.copyWith(
-          status: FormStatus.failure, statusText: 'Coffee update failure'));
+          status: FormStatus.failure, statusText: 'Product update failure'));
     }
   }
 
@@ -132,9 +138,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         currentProduct = currentProduct.copyWith(
             piece: updateCurrentProductEvent.value as String);
         break;
+      case ProductFieldKeys.barcode:
+        currentProduct = currentProduct.copyWith(
+            barcode: updateCurrentProductEvent.value as String);
+        break;
     }
 
-    debugPrint("Coffee Model: $currentProduct");
+    debugPrint("Product model: $currentProduct");
     emit(state.copyWith(productModel: currentProduct));
   }
 }

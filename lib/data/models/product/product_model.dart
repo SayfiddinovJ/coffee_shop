@@ -7,6 +7,7 @@ class ProductModel {
   final String description;
   final String createdAt;
   final String piece;
+  final String barcode;
 
   ProductModel({
     required this.productId,
@@ -17,6 +18,7 @@ class ProductModel {
     required this.description,
     required this.createdAt,
     required this.piece,
+    required this.barcode,
   });
 
   ProductModel copyWith({
@@ -28,6 +30,7 @@ class ProductModel {
     String? description,
     String? createdAt,
     String? piece,
+    String? barcode,
   }) {
     return ProductModel(
       productId: productId ?? this.productId,
@@ -37,7 +40,8 @@ class ProductModel {
       image: image ?? this.image,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
-      piece: piece?? this.piece,
+      piece: piece ?? this.piece,
+      barcode: barcode ?? this.barcode,
     );
   }
 
@@ -50,7 +54,8 @@ class ProductModel {
       image: json['image'] ?? '',
       description: json['description'] ?? '',
       createdAt: json['createdAt'] ?? '',
-      piece: json['piece']?? '',
+      piece: json['piece'] ?? '',
+      barcode: json['barcode'] ?? '',
     );
   }
 
@@ -64,6 +69,7 @@ class ProductModel {
       'description': description,
       'createdAt': createdAt,
       'piece': piece,
+      'barcode': barcode,
     };
   }
 
@@ -78,6 +84,7 @@ class ProductModel {
     description: $description
     createdAt: $createdAt
     piece: $piece
+    barcode: $barcode
     ''';
   }
 }

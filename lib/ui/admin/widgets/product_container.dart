@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffee_shop/data/models/product/product_model.dart';
-import 'package:coffee_shop/ui/admin/product_detail/product_detail.dart';
+import 'package:coffee_shop/ui/admin/product_detail/product_detail_screen.dart';
 import 'package:coffee_shop/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

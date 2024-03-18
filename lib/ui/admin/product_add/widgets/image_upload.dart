@@ -32,7 +32,7 @@ class _ImageUploadState extends State<ImageUpload> {
             },
             borderRadius: BorderRadius.circular(10.r),
             child: Container(
-              height: 200.h,
+              height: 350.h,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
@@ -40,9 +40,7 @@ class _ImageUploadState extends State<ImageUpload> {
                 border: Border.all(color: Colors.grey, width: 1),
               ),
               child: state.productModel.image.isEmpty
-                  ? const Center(
-                      child: Text('Choosing a product picture'),
-                    )
+                  ? const Center(child: Text('Choosing a product picture'))
                   : Image.network(state.productModel.image, fit: BoxFit.fill),
             ),
           ),

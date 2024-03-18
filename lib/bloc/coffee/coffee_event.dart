@@ -21,3 +21,5 @@ class DeleteProductEvent extends ProductEvent {
 
   DeleteProductEvent({required this.productId});
 }
+
+class PureEvent extends ProductEvent {}
