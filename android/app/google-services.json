@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:258821955959:android:d24a286f954069affc0172",
+        "android_client_info": {
+          "package_name": "com.example.admin_market"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfwzwttTXqbRnOw9ZeP9AfPHQ5qn2rCgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:258821955959:android:5c057db06b078ff0fc0172",
         "android_client_info": {
           "package_name": "com.example.coffee_shop"
